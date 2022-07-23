@@ -1,11 +1,12 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import { useAppSelector } from '../../hooks/hooks'
 
 export default function ProtectedRoute() {
-    const isLogedIn = false
+    const isLoggedIn = useAppSelector(state => state.auth.isLogedIn)
 
 
     return (
-      isLogedIn ? <Outlet/> : <Navigate to="login"/>
+      isLoggedIn ? <Outlet/> : <Navigate to="login"/>
     )
 }

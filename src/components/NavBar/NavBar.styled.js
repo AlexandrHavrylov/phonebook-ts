@@ -21,7 +21,24 @@ export const StyledLink = styled(NavLink)`
 `;
 
 export const UnlogedBarWrapper = styled.div`
-  width: 150px;
+  width: 250px;
   display: flex;
   justify-content: space-between;
+`;
+
+export const UserAvatar = styled.img`
+  border-radius: 30px;
+`;
+
+export const LoggedBarWrapper = styled.div`
+  /* width: 100px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ExitBtn = styled.button`
+  background: transparent;
+  cursor: pointer;
+  border: none;
 `;

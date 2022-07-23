@@ -3,6 +3,7 @@ export interface IAuthState {
   user: User;
   isLogedIn: boolean;
   isLoading: boolean;
+  isRegisred: boolean;
 }
 
 export interface ILoginResponse {
@@ -16,7 +17,7 @@ export interface User {
   avatar: string;
 }
 
-export interface UserLoginData {
+export interface UserData {
   email: string;
   password: string;
 }

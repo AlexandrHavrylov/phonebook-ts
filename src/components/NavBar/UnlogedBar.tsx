@@ -5,8 +5,8 @@ export default function UnlogedBar() {
     return (
          <UnlogedBarWrapper>
             
-            <StyledLink to={"/login"}>Login</StyledLink>
-            <StyledLink to={"/reg"}>Register</StyledLink>
+            <StyledLink to={"/login"}>Войти</StyledLink>
+            <StyledLink to={"/reg"}>Зарегистрироваться</StyledLink>
                 
             </UnlogedBarWrapper>
     )
