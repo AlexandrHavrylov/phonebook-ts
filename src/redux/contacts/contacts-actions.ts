@@ -1,6 +1,9 @@
 import { RootState } from "./../store";
 import { toast } from "react-toastify";
-import { Contact } from "./../../types/contacts/contactsTypes";
+import {
+  Contact,
+  IContactResponse,
+} from "./../../types/contacts/contactsTypes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -22,7 +25,7 @@ export const AddContact = createAsyncThunk<any, Contact, { state: RootState }>(
       token.set(tkn);
       const { data } = await axios.post("/api/contacts", contact);
       toast.success(`${contact.name} успешно добавлен в телефонную книгу`);
-      console.log(data);
+
       return data.data.result;
     } catch (error) {
       toast.error("Вы ввели некорректные данные");
@@ -38,7 +41,6 @@ export const getContacts = createAsyncThunk<any, void, { state: RootState }>(
       const tkn = getState().auth.token;
       token.set(tkn);
       const { data } = await axios.get("/api/contacts");
-      console.log(data.data.contacts);
       return data.data.contacts;
     } catch (error) {
       toast.error("Вы ввели некорректные данные");
@@ -46,3 +48,20 @@ export const getContacts = createAsyncThunk<any, void, { state: RootState }>(
     }
   }
 );
+
+export const deleteContact = createAsyncThunk<
+  IContactResponse,
+  any,
+  { state: RootState }
+>("contacts/delete", async (id, { getState }) => {
+  try {
+    const tkn = getState().auth.token;
+    token.set(tkn);
+    const { data } = await axios.delete(`/api/contacts/${id}`, id);
+    toast.success("Контакт успешно удален");
+    return data.data.result;
+  } catch (error) {
+    toast.error("Вы ввели некорректные данные");
+    throw new Error();
+  }
+});

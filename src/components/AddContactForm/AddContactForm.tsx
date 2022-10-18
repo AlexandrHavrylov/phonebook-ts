@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../hooks/hooks";
+import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { AddContact } from "../../redux/contacts/contacts-actions";
 import {
   AddBtn,
@@ -11,6 +12,8 @@ import {
 export default function AddContactForm() {
   const [contact, setContact] = useState({ name: "", email: "", phone: "" });
   const dispatch = useAppDispatch();
+  const contacts = useAppSelector((state) => state.contacts.contacts);
+  const isInContacts = contacts.some((el) => el.name === contact.name);
 
   const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
@@ -22,7 +25,10 @@ export default function AddContactForm() {
 
   const onAddClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(AddContact(contact));
+    isInContacts
+      ? toast.error(`${contact.name} уже есть в списке контаков`)
+      : dispatch(AddContact(contact));
+    setContact({ name: "", email: "", phone: "" });
   };
 
   return (

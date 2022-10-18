@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
 import {
   IContactResponse,
   IContactsState,
 } from "./../../types/contacts/contactsTypes";
-import { AddContact, getContacts } from "./contacts-actions";
+import { AddContact, deleteContact, getContacts } from "./contacts-actions";
 const LS_CONTACTS_KEY = "lsck";
 
 const userState = {
@@ -28,16 +27,24 @@ const contacts = createSlice({
 
       .addCase(
         AddContact.fulfilled,
-        (state: IContactsState, action: PayloadAction<any>) => {
+        (state: IContactsState, action: PayloadAction<IContactResponse>) => {
           state.contacts.push(action.payload);
           state.isLoading = false;
         }
       )
       .addCase(
         getContacts.fulfilled,
-        (state: IContactsState, action: PayloadAction<any>) => {
+        (state: IContactsState, action: PayloadAction<IContactResponse[]>) => {
           state.contacts = action.payload;
           state.isLoading = false;
+        }
+      )
+      .addCase(
+        deleteContact.fulfilled,
+        (state: IContactsState, action: PayloadAction<IContactResponse>) => {
+          state.contacts = state.contacts.filter(
+            (el) => el.name !== action.payload.name
+          );
         }
       );
   },
